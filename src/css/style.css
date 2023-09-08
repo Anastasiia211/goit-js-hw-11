@@ -17,6 +17,10 @@ body {
   margin-right: 30px;
 } */
 
+.search-form {
+  margin-bottom: 25px;
+}
+
 img {
   width: 100%;
   height: 200px;
