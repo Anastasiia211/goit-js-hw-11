@@ -35,10 +35,10 @@ async function onFormSubmit(evt) {
                
             resultScroll();
 
-            let lightbox = new SimpleLightbox('.galleryList', {
-                captionsData: 'alt',
-                captionDelay: 250,
-            });
+        let lightbox = new SimpleLightbox('.gallery a', {
+        captionsData: 'alt',
+        captionDelay: 250,
+      });
                
                
             if (result.totalHits > perPage) {
@@ -65,7 +65,7 @@ async function onFormSubmit(evt) {
             elements.gallery.insertAdjacentHTML('beforeend', createMarcup(result.hits));
             resultScroll();
             
-                let lightbox = new SimpleLightbox('.galleryList', {
+                let lightbox = new SimpleLightbox('.gallery a', {
                 captionsData: 'alt',
                 captionDelay: 250,
                 });
@@ -93,23 +93,28 @@ async function onFormSubmit(evt) {
                     downloads
                 }) =>
                     `<div class="photo-card">
-                    <a class="photo-card-link" href="${largeImageURL}">
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-  <div class="info">
-    <p class="info-item">
-      <b>Likes</b> ${likes}
-    </p>
-    <p class="info-item">
-      <b>Views</b> ${views}
-    </p>
-    <p class="info-item">
-      <b>Comments</b> ${comments}
-    </p>
-    <p class="info-item">
-      <b>Downloads</b> ${downloads}
-    </p>
-  </div>
-</div>`
+        <a class="photo-card-link" href="${largeImageURL}">
+          <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+          <div class="info">
+              <p class="info-item">
+                  <b>Likes</b>
+                  ${likes}
+              </p>
+              <p class="info-item">
+                  <b>Views</b>
+                  ${views}
+              </p>
+              <p class="info-item">
+                  <b>Comments</b>
+                  ${comments}
+              </p>
+              <p class="info-item">
+                  <b>Downloads</b>
+                  ${downloads}
+              </p>
+          </div>
+        </a>
+      </div>`
         )
             .join('');
  
