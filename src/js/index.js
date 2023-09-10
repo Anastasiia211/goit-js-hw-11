@@ -1,4 +1,4 @@
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
@@ -12,7 +12,7 @@ const elements = {
 
 
 let perPage;
-let queryValue;
+let queryValue = '';
 let page;
 
 elements.form.addEventListener('submit', onFormSubmit);
@@ -25,12 +25,18 @@ async function onFormSubmit(evt) {
 
     page = 1;
     perPage = 40;
+      
 
     try {
-         const result = await optionsImage(searchQuery.value, perPage, page);
+        const result = await optionsImage(searchQuery.value, perPage, page);
+
+         if (searchQuery.value.trim() === '') {
+            Notify.failure('Please enter a search query.');
+            return;
+        }
 
         if (result.hits.length > 0) {
-            Notify.success(`Hooray! We found ${result.totalHits} images.`);
+            Notiflix.Notify.success(`Hooray! We found ${result.totalHits} images.`);
             elements.gallery.innerHTML = createMarcup(result.hits);
                
             resultScroll();
@@ -38,7 +44,8 @@ async function onFormSubmit(evt) {
         let lightbox = new SimpleLightbox('.gallery a', {
         captionsData: 'alt',
         captionDelay: 250,
-      });
+        });
+            
                
                
             if (result.totalHits > perPage) {
@@ -46,22 +53,24 @@ async function onFormSubmit(evt) {
                 queryValue = searchQuery.value;
                 return queryValue;
             }
+            
         } else {
             elements.gallery.innerHTML = '';
-            Notify.failure('Sorry, there are no images matching your search query');
+            Notiflix.Notify.failure('Sorry, there are no images matching your search query');
             
         }
         
         } catch {
-        Notify.failure('Please try again.');
+        Notiflix.Notify.failure('Please enter a search query.');
         }
     }
+    
     
     async function onLoadMore () {
         page += 1;
         
         try {
-            const result = await optionsImage(perPage, queryValue, page);
+            const result = await optionsImage(queryValue,perPage, page);
             elements.gallery.insertAdjacentHTML('beforeend', createMarcup(result.hits));
             resultScroll();
             
@@ -70,14 +79,15 @@ async function onFormSubmit(evt) {
                 captionDelay: 250,
                 });
             lightbox.refresh();
+            
 
             if (Math.ceil(result.totalHits / perPage) === page) {
                 elements.loadBtn.classList.add('hidden');
-                Notify.info("We're sorry, but you've reached the end of search results.");
+                Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
             }
         } catch {
             
-            Notify.failure('Please try again.');
+            Notiflix.Notify.failure('Please try again.');
         }
     }
 
@@ -132,6 +142,14 @@ async function onFormSubmit(evt) {
         
         
 }
+
+
+
+
+
+
+
+
 
 
 

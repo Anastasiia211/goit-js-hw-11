@@ -21,3 +21,4 @@ const optionsImage = async (searchQuery, perPage, numberPage) => {
 
 export { optionsImage };
     
+    
