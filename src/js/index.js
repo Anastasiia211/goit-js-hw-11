@@ -26,7 +26,7 @@ async function onFormSubmit(evt) {
     page = 1;
     perPage = 40;
       
-
+ if (searchQuery.value) {
     try {
         const result = await optionsImage(searchQuery.value, perPage, page);
 
@@ -59,11 +59,13 @@ async function onFormSubmit(evt) {
             Notiflix.Notify.failure('Sorry, there are no images matching your search query');
             
         }
-        
-        } catch {
-        Notiflix.Notify.failure('Please enter a search query.');
-        }
+    } catch (e) {
+      console.error(e);
     }
+  } else {
+    Notiflix.Notify.failure('Please enter a search query.');
+  }
+}
     
     
     async function onLoadMore () {
