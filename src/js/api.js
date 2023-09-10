@@ -16,9 +16,8 @@ const optionsImage = async (searchQuery, perPage, numberPage) => {
     
 
     const response = await axios.get(`${BASE_URL}?${params}`);
-    return response.data;
+    return response;
 };
 
 export { optionsImage };
-    
     
